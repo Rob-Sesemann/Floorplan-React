@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+<img src="https://i.imgur.com/fx2orT2.png">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Floor Plan Lab
 
-## Available Scripts
+## Intro
 
-In the project directory, you can run:
+In the _Intro to JSX_ lesson, you saw the following React basics:
 
-### `npm start`
+- How to defining components as functions
+- How to return a class/ function component's UI defined using JSX
+- How to pass props to components
+- How to access the properties on props within a component.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**The minimum requirements are a deliverable.**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Set Up
 
-### `npm test`
+You can also complete this lab in a React [CodeSandbox](https://codesandbox.io) named "Floor Plan". (Optional)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Minimum Requirements
 
-### `npm run build`
+1. Define each component in its own file. The naming convention to use for a component's file is UpperCamelCase, for example, a `<CodeSandbox>` component's file would be named `CodeSandbox.js` (`CodeSandbox.jsx` also works).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Export each component from its module. For example:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+	```js
+	// CodeSandbox.js
+	
+	import React from 'react';
+	
+	function CodeSandbox(props) {
+	  return (
+	    <div>
+	      <h1>CodeSandbox</h1>
+	    </div>
+	  );
+	}
+	
+	// Must export the component's function (or class)
+	export default CodeSandbox;
+	```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Define the following components as functions and code them such that they fulfill their responsibilities:
 
-### `npm run eject`
+	| Component | Responsibilities |
+	|---|---|
+	| `<FloorPlan>` | Rendered by `<App>`.<br>Renders the following components:<br>- A `<Kitchen>` component<br>- A `<LivingRoom>` component<br>- Three `<Bedroom>` components<br>- Two `<Bath>` components<br>**Render the components in any order you wish to make the floor plan more interesting.** |
+	| `<Kitchen>` | Renders the text "Kitchen" and the following components:<br>- A `<Oven>` component<br>- A `<Sink>` component |
+	| `<LivingRoom>` | Renders the text "Living Room" |
+	| `<Bedroom>` | Accepts a `bedNum` prop and renders the text "Bedroom [bedNum]" (substituting the value of the `bedNum` prop) |
+	| `<Bath>` | Accepts a `size` prop and renders the text "[size] Bath", i.e., "Half Bath", "Full Bath" |
+	| `<Oven>` | Renders the text "Oven" |
+	| `<Sink>` | Renders the text "Sink" |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Add the following CSS inside of **styles.css** to style each component's wrapping `<div>` to make it easier to visualize the components:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```css
+div {
+  border: 1px solid grey;
+  margin: 5px;
+  padding: 5px;
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+With the minimum requirements complete, the output should resemble:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<img src="https://i.imgur.com/K8eVbuC.png">
 
-## Learn More
+#### Hints
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- If a component accepts a prop, that prop must be passed to it by the component that renders it, in other words, parent components pass props to their children components.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Bonus
 
-### Code Splitting
+Style the components to make the output look like a floor plan:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<img src="https://i.imgur.com/AHq1tCF.png">
 
-### Analyzing the Bundle Size
+#### Hints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Use `className` and/or `id` on React Elements (`<div>`, `<p>`, `<span>`, etc.) to apply CSS styling using CSS rules in the **styles.css** module.
 
-### Making a Progressive Web App
+- Styling the `<FloorPlan>` component as a CSS Grid is a great way to layout its children (grid items).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- If you wish, you can differentiate/customize each BedRoom by passing each bedroom a different `bedNum` prop to the component from the parent component (eg., `App.jsx`), such as:
+	
+	```js
+	<Bedroom bedNum={2} />
+	```
+	
+	And then, within the Bedroom component, you can now access this bedNum prop! This allows you to make the number (eg., 2) show up within the component by doing the following within the function in the child component (eg., `Bedroom.jsx`):
+	
+	```js
+	{ props.bedNum }
+	```
+	
+	That's how props work! Cool, huh?
+	
+	<hr>
+	
+	(bonus) And you could even use the incoming `bedNum` prop as a unique `id` for custom styling. For example, within Bedroom.jsx, you can do this:
 
-### Advanced Configuration
+	```js
+	<div className='bedroom' id={`bed-${props.bedNum}`}>
+	```
+	which would result in this `<Bedroom>` having a wrapping `<div>` like:
+	
+	```js
+	<div class="bedroom" id="bed-2">
+	```
+	when it gets rendered.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Deliverable
 
-### Deployment
+This lab is a deliverable
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Solution
 
-### `npm run build` fails to minify
+Don't peek unless you HAVE to:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Possible solution](https://codesandbox.io/s/mj279mk4vx?fontsize=14)
+
